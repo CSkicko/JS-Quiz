@@ -61,6 +61,9 @@ function resetStyles(){
 // Render landing page
 function renderLandingPage(){
     resetStyles();
+    questionIndex = 0;
+    currentScore = 0;
+    timer = 60;
     primText.innerHTML = "Coding Quiz Challenge";
     textContent.innerHTML = "Welcome to the javascript coding quiz!<br>You will be given 60 seconds to answer as many javascript questions as you can.<br>For each incorrect question, 5 seconds will be subtracted from the timer.<br>Good Luck!";
     buttons.innerHTML = "<li><button id='start-quiz'>Start Quiz</button></li>";
@@ -75,6 +78,7 @@ function renderLandingPage(){
     // 4. Make the answer buttons stack vertically
     // 5. Change the styling of the list elements to reduce vertical gaps
 function renderNextQuestion(){
+    event.stopPropagation();
     primText.innerHTML = "Q" + (questionIndex + 1) + ". " + questions[questionIndex].question;
     textContent.setAttribute("style", "order: 3;");
     if (!questionIndex){
@@ -96,7 +100,6 @@ function renderNextQuestion(){
 }
 //END
 
-// Start quiz
 // Check answer
 function evaluate(event){
     var answer = event.target;
