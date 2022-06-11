@@ -31,6 +31,8 @@ var questions = [
 var questionIndex = 0;
 // Timer variable
 var timer = 60;
+// Quiz timer required in global scope so that multiple functions can clear the interval set up later
+var quizTimer;
 // High scores variable (array of objects). Used with local storage
 // Current score variable
 var currentScore = 0;
@@ -79,6 +81,7 @@ function renderLandingPage(){
     textContent.innerHTML = "Welcome to the javascript coding quiz!<br>You will be given 60 seconds to answer as many javascript questions as you can.<br>For each incorrect question, 5 seconds will be subtracted from the timer.<br>Good Luck!";
     buttons.innerHTML = "<li><button id='start-quiz'>Start Quiz</button></li>";
     document.getElementById("start-quiz").addEventListener("click", renderNextQuestion);
+    document.getElementById("start-quiz").addEventListener("click", timeQuiz);
     landingAndHighScoreStyles();
 }
 // END
@@ -120,19 +123,22 @@ function evaluate(event){
         renderNextQuestion();
     } else {
         buttons.removeEventListener("click", evaluate);
-        clearInterval(timeQuiz);
+        clearInterval(quizTimer);
         renderComplete();
     }
 }
 // Timer
-var timeQuiz = setInterval(function(){
-    timer--;
-    currentTime.innerHTML = "Time Remaining: " + timer;
-    if (timer == 0){
-        clearInterval(timeQuiz);
-        renderComplete();
-    }
-}, 1000)
+function timeQuiz(){
+    quizTimer = setInterval(function(){
+        timer--;
+        currentTime.innerHTML = "Time Remaining: " + timer;
+        if (timer == 0){
+            clearInterval(quizTimer);
+            renderComplete();
+        }
+    }, 1000)
+}
+
 
 // View high scores
 function renderHighScores(event){
