@@ -32,7 +32,6 @@ var questionIndex = 0;
 // Timer variable
 var timer = 60;
 // High scores variable (array of objects). Used with local storage
-// Time reduction variable to set amount of time reduced on incorrect answer
 // Current score variable
 var currentScore = 0;
 // High score link element
@@ -43,13 +42,15 @@ var primText = document.getElementById("prim-text");
 var textContent = document.getElementById("text");
 // Buttons element
 var buttons = document.getElementById("buttons");
+// Timer element
+var currentTime = document.getElementById("timer");
 
 
 // _________
 // Functions
 // _________
-// Reset Styles
-function resetStyles(){
+// Set Styles for landing page and high score
+function landingAndHighScoreStyles(){
     textContent.setAttribute("style", "order: 1;");
     buttons.setAttribute("style", "flex-direction: row;");
     var listElems = document.querySelectorAll("li");
@@ -58,16 +59,27 @@ function resetStyles(){
     }
 }
 
+//Set styles for questions and quiz completed
+function qsAndCompletedStyles(){
+    textContent.setAttribute("style", "order: 3;");
+    buttons.setAttribute("style", "flex-direction: column;");
+    var listElems = document.querySelectorAll("li");
+    for (var i=0; i<listElems.length; i++){
+        listElems[i].setAttribute("style", "flex: 0 0 20px; margin-bottom: 5%; width: 50%;");
+    }
+}
+
 // Render landing page
 function renderLandingPage(){
-    resetStyles();
     questionIndex = 0;
     currentScore = 0;
     timer = 60;
+    currentTime.innerHTML = "Time Remaining: " + timer;
     primText.innerHTML = "Coding Quiz Challenge";
     textContent.innerHTML = "Welcome to the javascript coding quiz!<br>You will be given 60 seconds to answer as many javascript questions as you can.<br>For each incorrect question, 5 seconds will be subtracted from the timer.<br>Good Luck!";
     buttons.innerHTML = "<li><button id='start-quiz'>Start Quiz</button></li>";
     document.getElementById("start-quiz").addEventListener("click", renderNextQuestion);
+    landingAndHighScoreStyles();
 }
 // END
 
@@ -80,7 +92,6 @@ function renderLandingPage(){
 function renderNextQuestion(){
     event.stopPropagation();
     primText.innerHTML = "Q" + (questionIndex + 1) + ". " + questions[questionIndex].question;
-    textContent.setAttribute("style", "order: 3;");
     if (!questionIndex){
         textContent.innerHTML = ""
     } else {
@@ -91,12 +102,8 @@ function renderNextQuestion(){
         answerButtons = answerButtons.concat("<li><button class='answerBtn'>" + questions[questionIndex].answers[i] + "</button></li>");
     }
     buttons.innerHTML = answerButtons;
-    buttons.setAttribute("style", "flex-direction: column;");
-    var listElems = document.querySelectorAll("li");
-    for (var i=0; i<listElems.length; i++){
-        listElems[i].setAttribute("style", "flex: 0 0 20px; margin-bottom: 5%; width: 50%;");
-    }
     buttons.addEventListener("click", evaluate);
+    qsAndCompletedStyles();
 }
 //END
 
@@ -117,21 +124,30 @@ function evaluate(event){
     }
 }
 // Timer
+var timeQuiz = setInterval(function(){
+    timer--;
+    currentTime.innerHTML = "Time Remaining: " + timer;
+    if (timer == 0){
+        clearInterval(timeQuiz);
+        renderComplete();
+    }
+}, 1000)
 
 // View high scores
 function renderHighScores(event){
     event.preventDefault();
-    resetStyles();
     primText.innerHTML = "High Scores";
     textContent.innerHTML = "This is the high scores page";
     buttons.innerHTML = "<li><button id='back-button'>Go Back</button></li><li><button id='clear-scores'>Clear High Scores</button></li>";
     // Add click event listener to the go back button
     document.getElementById("back-button").addEventListener("click", renderLandingPage);
+    landingAndHighScoreStyles();
 }
 // Save score
 function renderComplete(){
     primText.innerHTML = "Test Completed";
     buttons.innerHTML = "<li>You scored: " + currentScore + " out of a possible 5</li><li>Form</li>";
+    qsAndCompletedStyles();
 }
 // Clear high scores
 
