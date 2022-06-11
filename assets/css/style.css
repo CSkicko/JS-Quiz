@@ -58,12 +58,12 @@ h1 {
     padding: 5% 10%;
 }
 
-.text {
+#text {
     order: 1;
     padding: 3% 5%;
 }
 
-.buttons {
+#buttons {
     order: 2;
     padding: 3% 5% 7% 5%;
 }

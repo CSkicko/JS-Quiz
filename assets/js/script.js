@@ -3,17 +3,40 @@
 // Timer variable
 // High scores variable (array of objects). Used with local storage
 // Time reduction variable to set amount of time reduced on incorrect answer
-//  Current score variable
+// Current score variable
+// High score link element
+var highScores = document.getElementById("high-scores");
+// h1 element 
+var primText = document.getElementById("prim-text");
+// Text element
+var textContent = document.getElementById("text");
+// Buttons element
+var buttons = document.getElementById("buttons");
+
 
 // _________
 // Functions
 // _________
-// Render content
+// Render landing page
+// Render questions
 // Start quiz
 // Check answer
 // Timer
 // View high scores
+function renderHighScores(event){
+    event.preventDefault();
+    primText.innerHTML = "High Scores";
+    textContent.innerHTML = "This is the high scores page";
+    buttons.innerHTML = "<li><button id='back-button'>Go Back</button></li>";
+    // Add click event listener to the go back button
+    document.getElementById("back-button").addEventListener("click", function(){
+        primText.innerHTML = "Coding Quiz Challenge";
+        textContent.innerHTML = "Welcome to the javascript coding quiz!<br>You will be given 60 seconds to answer as many javascript questions as you can.<br>For each incorrect question, 5 seconds will be subtracted from the timer.<br>Good Luck!";
+        buttons.innerHTML = "<li><button id='back-button'>Start Quiz</button></li>";
+    })
+}
 // Save score
+// Clear high scores
 
 // __________
 // Pseudocode
@@ -35,5 +58,6 @@
 //      4d. Save initials and score to local storage
 //      4e. On submission, render high scores page
 // 5. If the high scores link is pressed, render the high scores page
+highScores.addEventListener("click", renderHighScores);
 // 6. On high scores, if go back is selected, render the landing page
 // 7. On high scores, if clear high scores is selected, clear local storage and re-render the high scores page
