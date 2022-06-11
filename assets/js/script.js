@@ -120,6 +120,7 @@ function evaluate(event){
         renderNextQuestion();
     } else {
         buttons.removeEventListener("click", evaluate);
+        clearInterval(timeQuiz);
         renderComplete();
     }
 }
