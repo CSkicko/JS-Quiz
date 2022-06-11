@@ -109,7 +109,12 @@ function evaluate(event){
         timer = timer - 5;
     }
     questionIndex ++;
-    renderNextQuestion()
+    if (questionIndex < questions.length){
+        renderNextQuestion();
+    } else {
+        buttons.removeEventListener("click", evaluate);
+        renderComplete();
+    }
 }
 // Timer
 
@@ -124,6 +129,10 @@ function renderHighScores(event){
     document.getElementById("back-button").addEventListener("click", renderLandingPage);
 }
 // Save score
+function renderComplete(){
+    primText.innerHTML = "Test Completed";
+    buttons.innerHTML = "<li>You scored: " + currentScore + " out of a possible 5</li><li>Form</li>";
+}
 // Clear high scores
 
 // __________
