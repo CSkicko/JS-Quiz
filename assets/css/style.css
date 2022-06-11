@@ -75,7 +75,8 @@ h1 {
 }
 
 #buttons li {
-    flex: 0 0 100px;
+    flex: 1 0 100px;
+    margin: 0 10px 0 10px
 }
 
 button {

@@ -46,8 +46,19 @@ var buttons = document.getElementById("buttons");
 // _________
 // Functions
 // _________
+// Reset Styles
+function resetStyles(){
+    textContent.setAttribute("style", "order: 1;");
+    buttons.setAttribute("style", "flex-direction: row;");
+    var listElems = document.querySelectorAll("li");
+    for (var i=0; i<listElems.length; i++){
+        listElems[i].setAttribute("style", "flex: 1 0 100px; margin-bottom: 0; width: 100%;");
+    }
+}
+
 // Render landing page
 function renderLandingPage(){
+    resetStyles();
     primText.innerHTML = "Coding Quiz Challenge";
     textContent.innerHTML = "Welcome to the javascript coding quiz!<br>You will be given 60 seconds to answer as many javascript questions as you can.<br>For each incorrect question, 5 seconds will be subtracted from the timer.<br>Good Luck!";
     buttons.innerHTML = "<li><button id='start-quiz'>Start Quiz</button></li>";
@@ -85,9 +96,11 @@ function renderNextQuestion(){
 // Start quiz
 // Check answer
 // Timer
+
 // View high scores
 function renderHighScores(event){
     event.preventDefault();
+    resetStyles();
     primText.innerHTML = "High Scores";
     textContent.innerHTML = "This is the high scores page";
     buttons.innerHTML = "<li><button id='back-button'>Go Back</button></li><li><button id='clear-scores'>Clear High Scores</button></li>";
