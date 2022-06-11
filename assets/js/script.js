@@ -153,8 +153,15 @@ function renderHighScores(event){
 // Save score
 function renderComplete(){
     primText.innerHTML = "Test Completed";
-    buttons.innerHTML = "<li>You scored: " + currentScore + " out of a possible 5</li><li>Form</li>";
+    buttons.innerHTML = "<li>You scored: " + currentScore + " out of a possible 5</li><li><form><label for='initials'>Please enter your initials:</label><input type='text' id='initials'><input id='save-score' type='submit' value='Save Score'></form></li>";
+    var save = document.getElementById("save-score");
+    save.addEventListener("click", saveScore);
     qsAndCompletedStyles();
+}
+
+function saveScore(event){
+    event.preventDefault();
+    console.log("Saved!");
 }
 // Clear high scores
 
