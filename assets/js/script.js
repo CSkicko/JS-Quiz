@@ -43,6 +43,7 @@ function renderHighScores(event){
 // Pseudocode
 // __________
 // 1. Render the landing page content
+renderLandingPage();
 // 2. When the user clicks the start button:
 //      2a. Render the first question
 //      2b. Start the timer
