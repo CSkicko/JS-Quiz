@@ -68,16 +68,18 @@ h1 {
 #buttons {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: row;
     order: 2;
     padding: 3% 5% 7% 5%;
 }
 
 #buttons li {
-    flex: 1 0 100px;
+    flex: 0 0 100px;
 }
 
 button {
+    width: 100%;
     padding: 2%;
     background-color: var(--primary);
     border: none;

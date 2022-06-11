@@ -27,6 +27,8 @@ var questions = [
         correctAnswer: "if(!myVariable)"
     },
 ];
+
+var questionIndex = 0;
 // Timer variable
 // High scores variable (array of objects). Used with local storage
 // Time reduction variable to set amount of time reduced on incorrect answer
@@ -48,9 +50,38 @@ var buttons = document.getElementById("buttons");
 function renderLandingPage(){
     primText.innerHTML = "Coding Quiz Challenge";
     textContent.innerHTML = "Welcome to the javascript coding quiz!<br>You will be given 60 seconds to answer as many javascript questions as you can.<br>For each incorrect question, 5 seconds will be subtracted from the timer.<br>Good Luck!";
-    buttons.innerHTML = "<li><button id='back-button'>Start Quiz</button></li>";
+    buttons.innerHTML = "<li><button id='start-quiz'>Start Quiz</button></li>";
+    document.getElementById("start-quiz").addEventListener("click", renderNextQuestion);
 }
+// END
+
 // Render questions
+    // 1. Update the question text
+    // 2. Move the text to the bottom and display the result of the previous answer
+    // 3. Set up the answer buttons and render to the page
+    // 4. Make the answer buttons stack vertically
+    // 5. Change the styling of the list elements to reduce vertical gaps
+function renderNextQuestion(){
+    primText.innerHTML = "Q" + (questionIndex + 1) + ". " + questions[questionIndex].question;
+    textContent.setAttribute("style", "order: 3;");
+    if (!questionIndex){
+        textContent.innerHTML = ""
+    } else {
+        textContent.innerHTML = "Result of previous answer"
+    }
+    var answerButtons = "";
+    for (var i=0; i < questions[questionIndex].answers.length; i++){
+        answerButtons = answerButtons.concat("<li><button>" + questions[questionIndex].answers[i] + "</button></li>");
+    }
+    buttons.innerHTML = answerButtons;
+    buttons.setAttribute("style", "flex-direction: column;");
+    var listElems = document.querySelectorAll("li");
+    for (var i=0; i<listElems.length; i++){
+        listElems[i].setAttribute("style", "flex: 0 0 20px; margin-bottom: 5%; width: 50%;");
+    }
+}
+//END
+
 // Start quiz
 // Check answer
 // Timer
@@ -73,6 +104,7 @@ function renderHighScores(event){
 renderLandingPage();
 // 2. When the user clicks the start button:
 //      2a. Render the first question
+
 //      2b. Start the timer
 // 3. When the user selects an answer:
 //      3a. Check if the answer is correct
