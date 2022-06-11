@@ -18,7 +18,7 @@ var questions = [
     },
     {
         question: "How do you create comments in javascript code",
-        answers: ["<! !>", "{{}}", "// for single line, /* */ for multi line", "!--"],
+        answers: ["!!", "{{}}", "// for single line, /* */ for multi line", "!--"],
         correctAnswer: "// for single line, /* */ for multi line"
     },
     {
@@ -30,9 +30,11 @@ var questions = [
 
 var questionIndex = 0;
 // Timer variable
+var timer = 60;
 // High scores variable (array of objects). Used with local storage
 // Time reduction variable to set amount of time reduced on incorrect answer
 // Current score variable
+var currentScore = 0;
 // High score link element
 var highScores = document.getElementById("high-scores");
 // h1 element 
@@ -82,7 +84,7 @@ function renderNextQuestion(){
     }
     var answerButtons = "";
     for (var i=0; i < questions[questionIndex].answers.length; i++){
-        answerButtons = answerButtons.concat("<li><button>" + questions[questionIndex].answers[i] + "</button></li>");
+        answerButtons = answerButtons.concat("<li><button class='answerBtn'>" + questions[questionIndex].answers[i] + "</button></li>");
     }
     buttons.innerHTML = answerButtons;
     buttons.setAttribute("style", "flex-direction: column;");
@@ -90,11 +92,22 @@ function renderNextQuestion(){
     for (var i=0; i<listElems.length; i++){
         listElems[i].setAttribute("style", "flex: 0 0 20px; margin-bottom: 5%; width: 50%;");
     }
+    buttons.addEventListener("click", evaluate);
 }
 //END
 
 // Start quiz
 // Check answer
+function evaluate(event){
+    var answer = event.target;
+    if (answer.textContent == questions[questionIndex].correctAnswer){
+        currentScore ++;
+    } else {
+        timer = timer - 5;
+    }
+    questionIndex ++;
+    renderNextQuestion()
+}
 // Timer
 
 // View high scores
