@@ -1,5 +1,32 @@
 // Variables:
-// Variable for questions and answers (array of objects)
+// Variable for questions and answers
+var questions = [
+    {
+        question: "What operator do you use to evaluate equivalence in both value and type",
+        answers: ["==", "!=", "===", "><"],
+        correctAnswer: "==="
+    },
+    {
+        question: "How many times will the following function run: for (var i=0; i<5; i++) {console.log(i);}",
+        answers: ["4", "5", "6", "Infinite loop"],
+        correctAnswer: "5"
+    },
+    {
+        question: "What is NOT a javascript data type",
+        answers: ["Boolean", "Number", "Thread", "String"],
+        correctAnswer: "Thread"
+    },
+    {
+        question: "How do you create comments in javascript code",
+        answers: ["<! !>", "{{}}", "// for single line, /* */ for multi line", "!--"],
+        correctAnswer: "// for single line, /* */ for multi line"
+    },
+    {
+        question: "For a variable called myVariable and containing 'My String', which of the following will evaluate to FALSE",
+        answers: ["if(myVariable)", "if(myVariable == 'My String')", "if(typeof(myVariable) === 'string'", "if(!myVariable)"],
+        correctAnswer: "if(!myVariable)"
+    },
+];
 // Timer variable
 // High scores variable (array of objects). Used with local storage
 // Time reduction variable to set amount of time reduced on incorrect answer
@@ -32,7 +59,7 @@ function renderHighScores(event){
     event.preventDefault();
     primText.innerHTML = "High Scores";
     textContent.innerHTML = "This is the high scores page";
-    buttons.innerHTML = "<li><button id='back-button'>Go Back</button></li>";
+    buttons.innerHTML = "<li><button id='back-button'>Go Back</button></li><li><button id='clear-scores'>Clear High Scores</button></li>";
     // Add click event listener to the go back button
     document.getElementById("back-button").addEventListener("click", renderLandingPage);
 }
