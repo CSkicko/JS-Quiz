@@ -18,6 +18,11 @@ var buttons = document.getElementById("buttons");
 // Functions
 // _________
 // Render landing page
+function renderLandingPage(){
+    primText.innerHTML = "Coding Quiz Challenge";
+    textContent.innerHTML = "Welcome to the javascript coding quiz!<br>You will be given 60 seconds to answer as many javascript questions as you can.<br>For each incorrect question, 5 seconds will be subtracted from the timer.<br>Good Luck!";
+    buttons.innerHTML = "<li><button id='back-button'>Start Quiz</button></li>";
+}
 // Render questions
 // Start quiz
 // Check answer
@@ -29,11 +34,7 @@ function renderHighScores(event){
     textContent.innerHTML = "This is the high scores page";
     buttons.innerHTML = "<li><button id='back-button'>Go Back</button></li>";
     // Add click event listener to the go back button
-    document.getElementById("back-button").addEventListener("click", function(){
-        primText.innerHTML = "Coding Quiz Challenge";
-        textContent.innerHTML = "Welcome to the javascript coding quiz!<br>You will be given 60 seconds to answer as many javascript questions as you can.<br>For each incorrect question, 5 seconds will be subtracted from the timer.<br>Good Luck!";
-        buttons.innerHTML = "<li><button id='back-button'>Start Quiz</button></li>";
-    })
+    document.getElementById("back-button").addEventListener("click", renderLandingPage);
 }
 // Save score
 // Clear high scores
