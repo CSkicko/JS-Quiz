@@ -50,10 +50,6 @@ section {
     border-radius: 10px;
 }
 
-/* section > * {
-    width: 100%;
-} */
-
 h1 {
     font-size: 40px;
     padding: 5% 10%;
@@ -89,6 +85,27 @@ button {
 }
 
 button:hover {
+    background-color: var(--secondary);
+    color: var(--text);
+}
+
+/* Quiz completed page */
+input {
+    margin: 3%;
+}
+
+#initials {
+    width: 100%;
+}
+
+#save-score {
+    padding: 3%;
+    background-color: var(--primary);
+    border: none;
+    border-radius: 5px;
+}
+
+#save-score:hover {
     background-color: var(--secondary);
     color: var(--text);
 }
