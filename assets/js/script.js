@@ -65,7 +65,7 @@ function landingAndHighScoreStyles(){
 
 //Set styles for questions and quiz completed
 function qsAndCompletedStyles(){
-    textContent.setAttribute("style", "order: 3; border-top: 2px solid var(--primary); font-size: 20px;");
+    textContent.setAttribute("style", "order: 3; border-top: 2px solid var(--primary);");
     buttons.setAttribute("style", "flex-direction: column;");
     var listElems = document.querySelectorAll("li");
     for (var i=0; i<listElems.length; i++){
@@ -153,6 +153,7 @@ function renderHighScores(event){
     buttons.innerHTML = "<li><button id='back-button'>Go Back</button></li><li><button id='clear-scores'>Clear High Scores</button></li>";
     // Add click event listener to the go back button
     document.getElementById("back-button").addEventListener("click", renderLandingPage);
+    document.getElementById("clear-scores").addEventListener("click", clearScores);
     landingAndHighScoreStyles();
 }
 // Render the quiz completed page
@@ -181,6 +182,11 @@ function saveScore(event){
 }
 
 // Clear high scores
+function clearScores(event){
+    var emptyArray = [];
+    localStorage.setItem("highScores", JSON.stringify(emptyArray));
+    renderHighScores(event);
+}
 
 // __________
 // Pseudocode
