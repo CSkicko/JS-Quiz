@@ -47,7 +47,8 @@ var textContent = document.getElementById("text");
 var buttons = document.getElementById("buttons");
 // Timer element
 var currentTime = document.getElementById("timer");
-
+// Answer flag
+var lastAnswerCorrect;
 
 // _________
 // Functions
@@ -98,8 +99,10 @@ function renderNextQuestion(){
     primText.innerHTML = "Q" + (questionIndex + 1) + ". " + questions[questionIndex].question;
     if (!questionIndex){
         textContent.innerHTML = ""
+    } else if (lastAnswerCorrect){
+        textContent.innerHTML = "Correct!"
     } else {
-        textContent.innerHTML = "Result of previous answer"
+        textContent.innerHTML = "Wrong!"
     }
     var answerButtons = "";
     for (var i=0; i < questions[questionIndex].answers.length; i++){
@@ -116,8 +119,10 @@ function evaluate(event){
     var answer = event.target;
     if (answer.textContent == questions[questionIndex].correctAnswer){
         currentScore ++;
+        lastAnswerCorrect = true;
     } else {
         timer = timer - 5;
+        lastAnswerCorrect = false;
     }
     questionIndex ++;
     if (questionIndex < questions.length){
@@ -140,7 +145,6 @@ function timeQuiz(){
     }, 1000)
 }
 
-
 // View high scores
 function renderHighScores(event){
     event.preventDefault();
@@ -151,7 +155,7 @@ function renderHighScores(event){
     document.getElementById("back-button").addEventListener("click", renderLandingPage);
     landingAndHighScoreStyles();
 }
-// Save score
+// Render the quiz completed page
 function renderComplete(){
     primText.innerHTML = "Test Completed";
     buttons.innerHTML = "<li>You scored: " + currentScore + " out of a possible 5</li><li><form><label for='initials'>Please enter your initials:</label><input type='text' id='initials'><input id='save-score' type='submit' value='Save Score'></form></li>";
@@ -160,6 +164,7 @@ function renderComplete(){
     qsAndCompletedStyles();
 }
 
+// Save the score to local storage
 function saveScore(event){
     event.preventDefault();
     if (JSON.parse(localStorage.getItem("highScores"))){
@@ -174,6 +179,7 @@ function saveScore(event){
     localStorage.setItem("highScores", JSON.stringify(savedHighScores));
     renderHighScores(event);
 }
+
 // Clear high scores
 
 // __________
