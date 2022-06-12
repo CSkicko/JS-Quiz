@@ -65,7 +65,7 @@ function landingAndHighScoreStyles(){
 
 //Set styles for questions and quiz completed
 function qsAndCompletedStyles(){
-    textContent.setAttribute("style", "order: 3;");
+    textContent.setAttribute("style", "order: 3; border-top: 2px solid var(--primary); font-size: 20px;");
     buttons.setAttribute("style", "flex-direction: column;");
     var listElems = document.querySelectorAll("li");
     for (var i=0; i<listElems.length; i++){
@@ -98,7 +98,7 @@ function renderNextQuestion(){
     event.stopPropagation();
     primText.innerHTML = "Q" + (questionIndex + 1) + ". " + questions[questionIndex].question;
     if (!questionIndex){
-        textContent.innerHTML = ""
+        textContent.innerHTML = "Previous Result"
     } else if (lastAnswerCorrect){
         textContent.innerHTML = "Correct!"
     } else {
