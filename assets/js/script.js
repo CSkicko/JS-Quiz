@@ -33,8 +33,6 @@ var questionIndex = 0;
 var timer = 60;
 // Quiz timer required in global scope so that multiple functions can clear the interval set up later
 var quizTimer;
-// High scores variable (array of objects). Used with local storage
-var savedHighScores = [];
 // Current score variable
 var currentScore = 0;
 // High score link element
@@ -168,8 +166,9 @@ function renderComplete(){
 // Save the score to local storage
 function saveScore(event){
     event.preventDefault();
-    if (JSON.parse(localStorage.getItem("highScores"))){
-        savedHighScores.push(JSON.parse(localStorage.getItem("highScores")));
+    var savedHighScores = [];
+    if (JSON.parse(localStorage.getItem("highScores"))[0]){
+        savedHighScores = savedHighScores.concat(JSON.parse(localStorage.getItem("highScores")));
     }
     var player = document.getElementById("initials").value;
     var playerAndScore = {
