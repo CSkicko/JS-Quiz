@@ -108,20 +108,22 @@ function renderNextQuestion(){
 // Check answer
 function evaluate(event){
     var answer = event.target;
-    if (answer.textContent == questions[questionIndex].correctAnswer){
-        currentScore ++;
-        lastAnswerCorrect = true;
-    } else {
-        timer = timer - 5;
-        lastAnswerCorrect = false;
-    }
-    questionIndex ++;
-    if (questionIndex < questions.length){
-        renderNextQuestion();
-    } else {
-        buttons.removeEventListener("click", evaluate);
-        clearInterval(quizTimer);
-        renderComplete();
+    if (answer.type == "submit"){
+        if (answer.textContent == questions[questionIndex].correctAnswer){
+            currentScore ++;
+            lastAnswerCorrect = true;
+        } else {
+            timer = timer - 5;
+            lastAnswerCorrect = false;
+        }
+        questionIndex ++;
+        if (questionIndex < questions.length){
+            renderNextQuestion();
+        } else {
+            buttons.removeEventListener("click", evaluate);
+            clearInterval(quizTimer);
+            renderComplete();
+        }
     }
 }
 
