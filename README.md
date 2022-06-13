@@ -31,3 +31,4 @@ Use the following link to view the final rendered website:
 https://cskicko.github.io/JS-Quiz/
 
 A screenshot of the final product is provided below:
+![JS-Quiz_](https://user-images.githubusercontent.com/84214056/173271928-4bcca3b9-2f15-4727-9c59-c3a497e3729d.jpg)
