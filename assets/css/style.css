@@ -109,3 +109,15 @@ input {
     background-color: var(--secondary);
     color: var(--text);
 }
+
+@media screen and (max-width: 649px){
+    section {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 450px){
+    header {
+        font-size: 16px;
+    }
+}
