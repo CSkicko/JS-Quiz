@@ -1,4 +1,3 @@
-// Variables:
 // Variable for questions and answers
 var questions = [
     {
@@ -28,6 +27,7 @@ var questions = [
     },
 ];
 
+// Variable for tracking position in questions array
 var questionIndex = 0;
 // Timer variable
 var timer = 60;
@@ -48,9 +48,9 @@ var currentTime = document.getElementById("timer");
 // Answer flag
 var lastAnswerCorrect;
 
-// _________
-// Functions
-// _________
+// _______________________________________
+//               Functions
+// _______________________________________
 // Set Styles for landing page and high score
 function landingAndHighScoreStyles(){
     textContent.setAttribute("style", "order: 1;");
@@ -84,14 +84,8 @@ function renderLandingPage(){
     document.getElementById("start-quiz").addEventListener("click", timeQuiz);
     landingAndHighScoreStyles();
 }
-// END
 
 // Render questions
-    // 1. Update the question text
-    // 2. Move the text to the bottom and display the result of the previous answer
-    // 3. Set up the answer buttons and render to the page
-    // 4. Make the answer buttons stack vertically
-    // 5. Change the styling of the list elements to reduce vertical gaps
 function renderNextQuestion(){
     event.stopPropagation();
     primText.innerHTML = "Q" + (questionIndex + 1) + ". " + questions[questionIndex].question;
@@ -110,7 +104,6 @@ function renderNextQuestion(){
     buttons.addEventListener("click", evaluate);
     qsAndCompletedStyles();
 }
-//END
 
 // Check answer
 function evaluate(event){
@@ -131,6 +124,7 @@ function evaluate(event){
         renderComplete();
     }
 }
+
 // Timer
 function timeQuiz(){
     quizTimer = setInterval(function(){
@@ -154,6 +148,7 @@ function renderHighScores(event){
     document.getElementById("clear-scores").addEventListener("click", clearScores);
     landingAndHighScoreStyles();
 }
+
 // Render the quiz completed page
 function renderComplete(){
     primText.innerHTML = "Test Completed";
@@ -167,15 +162,23 @@ function renderComplete(){
 function saveScore(event){
     event.preventDefault();
     var savedHighScores = [];
-    if (JSON.parse(localStorage.getItem("highScores"))[0]){
-        savedHighScores = savedHighScores.concat(JSON.parse(localStorage.getItem("highScores")));
-    }
     var player = document.getElementById("initials").value;
     var playerAndScore = {
         "player": player,
         "score": currentScore
     }
-    savedHighScores.push(playerAndScore);
+    if (JSON.parse(localStorage.getItem("highScores"))[0]){
+        savedHighScores = savedHighScores.concat(JSON.parse(localStorage.getItem("highScores")));
+        for (i = 0; i<savedHighScores.length; i++){
+            if (currentScore > savedHighScores[i].score){
+                savedHighScores.splice(i, 0, playerAndScore);
+                break;
+            } else if (i == (savedHighScores.length - 1)){
+                savedHighScores.push(playerAndScore);
+                break;
+            }
+        }
+    }
     localStorage.setItem("highScores", JSON.stringify(savedHighScores));
     renderHighScores(event);
 }
@@ -187,28 +190,6 @@ function clearScores(event){
     renderHighScores(event);
 }
 
-// __________
-// Pseudocode
-// __________
-// 1. Render the landing page content
-renderLandingPage();
-// 2. When the user clicks the start button:
-//      2a. Render the first question
-
-//      2b. Start the timer
-// 3. When the user selects an answer:
-//      3a. Check if the answer is correct
-//      3b. If correct, update the score
-//      3c. If wrong, reduce time
-//      3d. Display result
-//      3e. Render next question
-// 4. When the timer runs out, or all questions are answered:
-//      4a. Render the completed quiz page
-//      4b. Display the final score
-//      4c. Get initials from player
-//      4d. Save initials and score to local storage
-//      4e. On submission, render high scores page
-// 5. If the high scores link is pressed, render the high scores page
+// Render the landing page and add an event listener to the high scores element
 highScores.addEventListener("click", renderHighScores);
-// 6. On high scores, if go back is selected, render the landing page
-// 7. On high scores, if clear high scores is selected, clear local storage and re-render the high scores page
+renderLandingPage();
