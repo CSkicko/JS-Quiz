@@ -140,8 +140,19 @@ function timeQuiz(){
 // View high scores
 function renderHighScores(event){
     event.preventDefault();
+    var savedHighScores = [];
+    var htmlContent = "<ul>";
+    if (JSON.parse(localStorage.getItem("highScores"))[0]){
+        savedHighScores = savedHighScores.concat(JSON.parse(localStorage.getItem("highScores")));
+        for (var i = 0; i<savedHighScores.length; i++){
+            htmlContent = htmlContent.concat("<li>" + savedHighScores[i].player + "  -  " + savedHighScores[i].score + "</li>");
+        }
+    } else {
+        htmlContent = htmlContent.concat("<li>No Scores currently saved</li>");
+    }
+    htmlContent = htmlContent.concat("</ul>");
     primText.innerHTML = "High Scores";
-    textContent.innerHTML = "This is the high scores page";
+    textContent.innerHTML = htmlContent;
     buttons.innerHTML = "<li><button id='back-button'>Go Back</button></li><li><button id='clear-scores'>Clear High Scores</button></li>";
     // Add click event listener to the go back button
     document.getElementById("back-button").addEventListener("click", renderLandingPage);
@@ -169,7 +180,7 @@ function saveScore(event){
     }
     if (JSON.parse(localStorage.getItem("highScores"))[0]){
         savedHighScores = savedHighScores.concat(JSON.parse(localStorage.getItem("highScores")));
-        for (i = 0; i<savedHighScores.length; i++){
+        for (var i = 0; i<savedHighScores.length; i++){
             if (currentScore > savedHighScores[i].score){
                 savedHighScores.splice(i, 0, playerAndScore);
                 break;
@@ -178,6 +189,8 @@ function saveScore(event){
                 break;
             }
         }
+    } else {
+        savedHighScores.push(playerAndScore);
     }
     localStorage.setItem("highScores", JSON.stringify(savedHighScores));
     renderHighScores(event);
