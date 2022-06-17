@@ -144,7 +144,7 @@ function renderHighScores(event){
     event.preventDefault();
     var savedHighScores = [];
     var htmlContent = "<ul>";
-    if (JSON.parse(localStorage.getItem("highScores"))[0]){
+    if (localStorage.getItem("highScores") && localStorage.getItem("highScores") !== '[]'){
         savedHighScores = savedHighScores.concat(JSON.parse(localStorage.getItem("highScores")));
         for (var i = 0; i<savedHighScores.length; i++){
             htmlContent = htmlContent.concat("<li>" + savedHighScores[i].player + "  -  " + savedHighScores[i].score + "</li>");
@@ -180,7 +180,7 @@ function saveScore(event){
         "player": player,
         "score": currentScore
     }
-    if (JSON.parse(localStorage.getItem("highScores"))[0]){
+    if (localStorage.getItem("highScores") && localStorage.getItem("highScores") !== '[]'){
         savedHighScores = savedHighScores.concat(JSON.parse(localStorage.getItem("highScores")));
         for (var i = 0; i<savedHighScores.length; i++){
             if (currentScore > savedHighScores[i].score){
