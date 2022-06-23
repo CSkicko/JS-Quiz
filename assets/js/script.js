@@ -31,8 +31,6 @@ var questions = [
 var questionIndex = 0;
 // Timer variable
 var timer = 60;
-// Quiz timer required in global scope so that multiple functions can clear the interval set up later
-var quizTimer;
 // Current score variable
 var currentScore = 0;
 // High score link element
@@ -40,7 +38,7 @@ var highScores = document.getElementById("high-scores");
 // h1 element 
 var primText = document.getElementById("prim-text");
 // Text element
-var textContent = document.getElementById("text");
+var textContent = document.getElementById("body-text");
 // Buttons element
 var buttons = document.getElementById("buttons");
 // Timer element
@@ -71,9 +69,8 @@ function qsAndCompletedStyles(){
     }
 }
 
-// Render landing page
+// Render landing page -- ERROR: Need to change up bug in code for when high scores is pressed mid quiz
 function renderLandingPage(){
-    questionIndex = 0;
     currentScore = 0;
     timer = 60;
     currentTime.innerHTML = "Time Remaining: " + timer;
@@ -121,7 +118,6 @@ function evaluate(event){
             renderNextQuestion();
         } else {
             buttons.removeEventListener("click", evaluate);
-            clearInterval(quizTimer);
             renderComplete();
         }
     }
@@ -142,6 +138,10 @@ function timeQuiz(){
 // View high scores
 function renderHighScores(event){
     event.preventDefault();
+    // resets the question index to 0 to ensure quiz is restarted once high scores page is viewed
+    questionIndex = 0;
+    // Clear interval required in case high scores is clicked mid game
+    clearInterval(quizTimer);
     var savedHighScores = [];
     var htmlContent = "<ul>";
     if (localStorage.getItem("highScores") && localStorage.getItem("highScores") !== '[]'){
@@ -155,9 +155,11 @@ function renderHighScores(event){
     htmlContent = htmlContent.concat("</ul>");
     primText.innerHTML = "High Scores";
     textContent.innerHTML = htmlContent;
-    buttons.innerHTML = "<li><button id='back-button'>Go Back</button></li><li><button id='clear-scores'>Clear High Scores</button></li>";
-    // Add click event listener to the go back button
-    document.getElementById("back-button").addEventListener("click", renderLandingPage);
+    buttons.innerHTML = "<li><button id='home-button'>Home</button></li><li><button id='clear-scores'>Clear High Scores</button></li>";
+    // Remove event listener on quiz buttons
+    buttons.removeEventListener("click", evaluate);
+    // Add click event listener to the home button
+    document.getElementById("home-button").addEventListener("click", renderLandingPage);
     document.getElementById("clear-scores").addEventListener("click", clearScores);
     landingAndHighScoreStyles();
 }
@@ -169,6 +171,7 @@ function renderComplete(){
     var save = document.getElementById("save-score");
     save.addEventListener("click", saveScore);
     qsAndCompletedStyles();
+    clearInterval(quizTimer);
 }
 
 // Save the score to local storage
@@ -180,9 +183,10 @@ function saveScore(event){
         "player": player,
         "score": currentScore
     }
+
     if (localStorage.getItem("highScores") && localStorage.getItem("highScores") !== '[]'){
         savedHighScores = savedHighScores.concat(JSON.parse(localStorage.getItem("highScores")));
-        for (var i = 0; i<savedHighScores.length; i++){
+        for (var i = 0; i < savedHighScores.length; i++){
             if (currentScore > savedHighScores[i].score){
                 savedHighScores.splice(i, 0, playerAndScore);
                 break;
